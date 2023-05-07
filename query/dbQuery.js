@@ -27,12 +27,48 @@ const login = (data) => {
     })
 }
 
+const category = (data) => {
+    return new Promise((res, rej)=> {
+        let row ='menu_id, name, price, menu_url'
+        db.connection.query(`SELECT ${row} FROM menu WHERE category=?`, [data], (err, db_data) =>{
+            if(err) rej(err);
+            else{
+                res({"result":db_data});
+            }
+        });
+    });
+}
 
 
+const menuClick = (data) => {
+    return new Promise((res, rej)=> {
+        let row ='menu_id, name, inform, price, menu_url'
+        db.connection.query(`SELECT ${row} FROM menu WHERE menu_id=?`, [data], (err, db_data) =>{
+            if(err) rej(err);
+            else{
+                res({"result":db_data});
+            }
+        });
+    });
+}
 
+const setClick = () => {
+    return new Promise((res, rej)=> {
+        let row ='menu_option_id, category, name, price'
+        db.connection.query(`SELECT ${row} FROM menu_option`, (err, db_data) =>{
+            if(err) rej(err);
+            else{
+                res({"result":db_data});
+            }
+        });
+    });
+}
 
 module.exports = {
-    login
+    login,
+    category,
+    menuClick,
+    setClick
 };
 
 
