@@ -10,6 +10,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+app.io = require('socket.io')();
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -37,6 +39,43 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+
+const query = require('./query/dbQuery');
+
+app.io.on('connection',(socket) => {
+  console.log('유저가 들어왔다');
+
+  socket.on('disconnect', () => {
+      console.log('유저가 나갔다');
+  });
+
+  socket.on('chat-msg', (data) => {
+    const { user, total_price, msg } = data;
+    console.log(user);
+    console.log(total_price);
+    console.log(msg);
+    
+    let result = query.qr_save(user,total_price,msg);
+    console.log(result);
+
+    app.io.emit('chat-msg', msg);
+
+  });
+
+  socket.on('qr_send', (data) => {
+    let order_number_id = data;
+    console.log(order_number_id);
+
+    query.order_number_status(order_number_id);
+
+    app.io.emit('qr_send', order_number_id+"번! 주문을 완료하였습니다");
+
+  });
+
+
+
 });
 
 module.exports = app;

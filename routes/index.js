@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const query = require('../query/dbQuery');
 
+
 /* GET home page. */
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
@@ -21,21 +22,48 @@ router.get('/category', async (req, res)=> {
   res.send(result);
 });
 
+//메뉴 클릭-정보보내기
 router.get('/menuClick', async (req, res)=> {
-  let result = await query.menuClick(req.query.menu_id);
+  let menuresult = await query.menuClick(req.query.menu_id);
+  let DessertOptionResult = await query.dessertOption();
+  let DrinkOptionResult = await query.drinkOption();
+  let result = {
+    "menu" : menuresult,
+    "dessert_option": DessertOptionResult,
+    "drink_option": DrinkOptionResult
+  }
   res.send(result);
 });
 
-router.get('/setClick', async (req, res)=> {
-  let result = await query.setClick();
+
+// 장바구니 주문버튼 클릭
+router.post('/cart', async (req, res) => {
+  const { user_id, total_price, menu } = req.body;
+
+  // order_number_save 함수 호출
+  let result = await query.order_number_save(user_id, total_price, menu);
+  
   res.send(result);
 });
+
 
 //유저별 전체 주문기록
 
 
-//소켓연결로 주문정보받기 주문 완료되면 앱으로 알림
 
+//아두이노 소켓연결  web으로 완료 화면 보내기
+router.get('/kiosk', function(req, res, next) {
+
+  res.render('kiosk');
+});
+
+
+
+
+//test chating
+// router.get('/chat', async (req, res)=> {
+//   res.render('chat');
+// });
 
 
 module.exports = router;
