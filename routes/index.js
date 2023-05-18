@@ -59,6 +59,8 @@ router.get('/kiosk', function(req, res, next) {
 
 
 
+//multer 얼굴이미지
+
 
 //test chating
 // router.get('/chat', async (req, res)=> {

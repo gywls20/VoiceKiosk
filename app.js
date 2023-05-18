@@ -41,7 +41,31 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+//멀터
+const multer = require('multer');
+const fs = require('fs');
 
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      done(null, '/public/flask/images/');
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname);
+      done(null, path.basename(file.originalname, ext)+ ext);
+    },
+  }),
+  limits: { fileSize: 500 * 1024 * 1024 },
+});
+
+
+
+
+
+
+
+
+//소켓
 const query = require('./query/dbQuery');
 
 app.io.on('connection',(socket) => {
@@ -73,8 +97,6 @@ app.io.on('connection',(socket) => {
     app.io.emit('qr_send', order_number_id+"번! 주문을 완료하였습니다");
 
   });
-
-
 
 });
 
