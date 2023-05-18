@@ -1,26 +1,6 @@
 const db = require('../config/dbConfig');
 
-//qr 데이터 받아서 db저장
-const qr_save = (user,total_price,msg) => {
-        console.log("db:"+user);   
-        console.log("db:"+total_price);
-        console.log("db:"+msg);
-        db.connection.query('insert into `order_number` (user_id,total_price) values (?,?);', [user,total_price], (err, db_data) => { //order_number저장
-            if(err) console.error(err);
-            else{
-                console.log(`inserted_order_number_id: ${db_data.insertId}`);
-                const inserted_order_number_id=db_data.insertId;
-                msg.forEach(item => {
-                    db.connection.query('insert into order_list (order_number, menu_id, menu_option_id1, menu_option_id2) values (?,?,?,?);', [inserted_order_number_id,item.menu_id,item.option_id1,item.option_id2], (err, db_data) => { //order_list저장
-                        if(err) console.error(err);
-                        else{
-                            
-                        }
-                    })
-                });    
-            }
-        })
-}
+
 
 
 //주문완료 / 상태 1로 바꾸기
@@ -118,8 +98,8 @@ const menuClick = (data) => {
 //셋트일때 옵션정보-1
 const dessertOption = () => {
     return new Promise((res, rej)=> {
-        let orow ='menu_option_id, category, name, price'
-        db.connection.query(`SELECT ${orow} FROM menu_option WHERE category='dessert'`, (err, db_data) =>{
+        let row ='menu_option_id, category, name, price'
+        db.connection.query(`SELECT ${row} FROM menu_option WHERE category='dessert'`, (err, db_data) =>{
         if(err) rej(err);
         else{
             res(db_data);
@@ -130,8 +110,21 @@ const dessertOption = () => {
 //셋트일때 옵션정보-2
 const drinkOption = () => {
     return new Promise((res, rej)=> {
-        let orow ='menu_option_id, category, name, price'
-        db.connection.query(`SELECT ${orow} FROM menu_option WHERE category='drink'`, (err, db_data) =>{
+        let row ='menu_option_id, category, name, price'
+        db.connection.query(`SELECT ${row} FROM menu_option WHERE category='drink'`, (err, db_data) =>{
+        if(err) rej(err);
+        else{
+            res(db_data);
+        }
+        });
+    });
+}
+
+//전체 주문기록 유저별
+const allorder = (data) => {
+    return new Promise((res, rej)=> {
+        let row ='order_number_id, total_price, status, created_date'
+        db.connection.query(`SELECT ${row} FROM order_number WHERE user_id=?`,[data], (err, db_data) =>{
         if(err) rej(err);
         else{
             res(db_data);
@@ -147,7 +140,8 @@ module.exports = {
     dessertOption,
     drinkOption,
     order_number_save,
-    order_number_status
+    order_number_status,
+    allorder
 };
 
 
@@ -172,4 +166,29 @@ function token_check(db_data) {
         db.connection.query('')
     }
 
+}
+
+
+
+
+//qr 데이터 받아서 db저장
+const qr_save = (user,total_price,msg) => {
+        console.log("db:"+user);   
+        console.log("db:"+total_price);
+        console.log("db:"+msg);
+        db.connection.query('insert into `order_number` (user_id,total_price) values (?,?);', [user,total_price], (err, db_data) => { //order_number저장
+            if(err) console.error(err);
+            else{
+                console.log(`inserted_order_number_id: ${db_data.insertId}`);
+                const inserted_order_number_id=db_data.insertId;
+                msg.forEach(item => {
+                    db.connection.query('insert into order_list (order_number, menu_id, menu_option_id1, menu_option_id2) values (?,?,?,?);', [inserted_order_number_id,item.menu_id,item.option_id1,item.option_id2], (err, db_data) => { //order_list저장
+                        if(err) console.error(err);
+                        else{
+                            
+                        }
+                    })
+                });    
+            }
+        })
 }

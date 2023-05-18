@@ -48,7 +48,10 @@ router.post('/cart', async (req, res) => {
 
 
 //유저별 전체 주문기록
-
+router.get('/allorder', async (req, res)=> {
+  let result = await query.allorder(req.query.user_id);
+  res.send(result);
+});
 
 
 //아두이노 소켓연결  web으로 완료 화면 보내기
