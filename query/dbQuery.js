@@ -31,7 +31,7 @@ const order_number_save = (user,total_price,menu) => {
                     db.connection.query('insert into order_list (order_number, menu_id, menu_option_id1, menu_option_id2) values (?,?,?,?);', [inserted_order_number_id,item.menu_id,item.option_id1,item.option_id2], (err, db_data) => { //order_list저장
                         if(err) rej(err);
                         else{
-                            res({"result":"Cart data saved successfully"})
+                            res({"order_number_id":db_data.insertId})
                         }
                     })
                 });    
