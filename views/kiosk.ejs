@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,4 +19,26 @@
         });
         </script>
     </body>
+=======
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket Example</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    </head>
+    <body>
+        <ul id="messages"></ul>
+        
+        <script>
+            const socket = io();
+            socket.on('qr_send', (msg) => {
+            const messageList = document.getElementById('messages');
+            const listItem = document.createElement('li');
+            listItem.textContent = msg;
+            messageList.appendChild(listItem);
+        });
+        </script>
+    </body>
+>>>>>>> 6f745479b4ca0899bc93f61d46c75ed31cdeb233
 </html>

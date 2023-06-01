@@ -31,7 +31,11 @@ const order_number_save = (user,total_price,menu) => {
                     db.connection.query('insert into order_list (order_number, menu_id, menu_option_id1, menu_option_id2) values (?,?,?,?);', [inserted_order_number_id,item.menu_id,item.option_id1,item.option_id2], (err, db_data) => { //order_list저장
                         if(err) rej(err);
                         else{
+<<<<<<< HEAD
                             res({"order_number_id":inserted_order_number_id})
+=======
+                            res({"order_number_id":db_data.insertId})
+>>>>>>> 6f745479b4ca0899bc93f61d46c75ed31cdeb233
                         }
                     })
                 });    
@@ -123,6 +127,7 @@ const drinkOption = () => {
 //전체 주문기록 유저별
 const allorder = (data) => {
     return new Promise((res, rej)=> {
+<<<<<<< HEAD
         let row ='order_number_id, total_price, created_date'
         db.connection.query(`SELECT ${row} FROM order_number WHERE status=TRUE AND user_id=?`,[data], (err, db_data) =>{
         if(err) rej(err);
@@ -137,6 +142,12 @@ const allorder = (data) => {
             //         }
             //     });
             // });
+=======
+        let row ='order_number_id, total_price, status, created_date'
+        db.connection.query(`SELECT ${row} FROM order_number WHERE user_id=?`,[data], (err, db_data) =>{
+        if(err) rej(err);
+        else{
+>>>>>>> 6f745479b4ca0899bc93f61d46c75ed31cdeb233
             res(db_data);
         }
         });

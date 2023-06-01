@@ -2,6 +2,10 @@ var express = require('express');
 var router = express.Router();
 const query = require('../query/dbQuery');
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6f745479b4ca0899bc93f61d46c75ed31cdeb233
 /* GET home page. */
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
@@ -61,4 +65,16 @@ router.get('/kiosk', function(req, res, next) {
 
 
 
+<<<<<<< HEAD
+=======
+//multer 얼굴이미지
+
+
+//test chating
+// router.get('/chat', async (req, res)=> {
+//   res.render('chat');
+// });
+
+
+>>>>>>> 6f745479b4ca0899bc93f61d46c75ed31cdeb233
 module.exports = router;

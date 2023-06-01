@@ -11,17 +11,36 @@
     "dotenv": "^16.0.3",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+<<<<<<< HEAD
     "flask": "^0.2.10",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "multer": "^1.4.5-lts.1",
+=======
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+>>>>>>> 6f745479b4ca0899bc93f61d46c75ed31cdeb233
     "mysql": "^2.18.1",
     "socket.io": "^4.6.1",
     "ws": "^8.13.0"
   },
   "main": "app.js",
+<<<<<<< HEAD
   "keywords": [],
   "author": "",
   "license": "ISC",
+=======
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gywls20/VoiceKiosk.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gywls20/VoiceKiosk/issues"
+  },
+  "homepage": "https://github.com/gywls20/VoiceKiosk#readme",
+>>>>>>> 6f745479b4ca0899bc93f61d46c75ed31cdeb233
   "description": ""
 }
